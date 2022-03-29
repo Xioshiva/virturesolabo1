@@ -1,4 +1,4 @@
 [tp3]
-h1 ansible_host=10.9.8.17 ansible_port=22 ansible_user=iti ansible_password=iti
-h2 ansible_host=10.9.8.16 ansible_port=22 ansible_user=iti ansible_password=iti
-r1 ansible_host=10.9.8.18 ansible_port=22 ansible_user=iti ansible_password=iti
+h1 ansible_host=10.9.8.25 ansible_port=22 ansible_user=iti ansible_password=iti
+h2 ansible_host=10.9.8.28 ansible_port=22 ansible_user=iti ansible_password=iti
+r1 ansible_host=10.9.8.26 ansible_port=22 ansible_user=iti ansible_password=iti
