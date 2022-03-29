@@ -1,0 +1,36 @@
+---
+- name: Ip forwarding
+  hosts: r1
+  tasks:
+    - ansible.posix.sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        sysctl_set: yes
+        state: present
+        reload: yes
+      become: yes
+- name: Write interfaces
+  hosts: r1
+  tasks:
+    - name: Set interfaces
+      ansible.builtin.shell: |
+        sudo echo '
+        source /etc/network/interfaces.d/*
+        allow-hotplug eth0
+        auto lo
+        iface lo inet loopback
+        iface eth0 inet dhcp
+        dns-nameserver 8.8.8.8
+        pre-up sleep 2
+
+        auto eth1
+        iface eth1 inet static
+        	address 10.0.1.2
+        	netmask 255.255.255.0
+
+        auto eth2
+        iface eth2 inet static
+        	address 10.0.2.2
+        	netmask 255.255.255.0
+        ' > /etc/network/interfaces
+      become: yes
