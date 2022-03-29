@@ -1,0 +1,5 @@
+auto eth1
+iface eth1 inet static
+    address {{addr}}
+    netmask 255.255.255.0
+up ip route add {{other_subnet}}/24 via {{router_addr}}
