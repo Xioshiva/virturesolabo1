@@ -11,26 +11,23 @@
       become: yes
 - name: Write interfaces
   hosts: r1
+  become: yes
   tasks:
-    - name: Set interfaces
+    - name: Set interface 1
+      vars:
+        addr: 10.0.1.2
+        ethnbr: 1
+      template:
+        src: templaterouter
+        dest: /etc/network/interfaces.d/eth1
+    - name: Set interface 2
+      vars:
+        addr: 10.0.2.2
+        ethnbr: 2
+      template:
+        src: templaterouter
+        dest: /etc/network/interfaces.d/eth2
+    - name: Launch interfaces
       ansible.builtin.shell: |
-        sudo echo '
-        source /etc/network/interfaces.d/*
-        allow-hotplug eth0
-        auto lo
-        iface lo inet loopback
-        iface eth0 inet dhcp
-        dns-nameserver 8.8.8.8
-        pre-up sleep 2
-
-        auto eth1
-        iface eth1 inet static
-        	address 10.0.1.2
-        	netmask 255.255.255.0
-
-        auto eth2
-        iface eth2 inet static
-        	address 10.0.2.2
-        	netmask 255.255.255.0
-        ' > /etc/network/interfaces
-      become: yes
+        sudo ifdown eth1 && sudo ifup eth1
+        sudo ifdown eth2 && sudo ifup eth2
