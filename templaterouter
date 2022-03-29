@@ -1,0 +1,4 @@
+auto eth{{ethnbr}}
+iface eth{{ethnbr}} inet static
+    address {{addr}}
+    netmask 255.255.255.0
