@@ -22,22 +22,16 @@
       dest: /var/www/html/index.html
 - name: Write interfaces
   hosts: h2
+  vars:
+    addr: 10.0.2.1
+    other_subnet: 10.0.1.0
+    router_addr: 10.0.2.2
+  become: yes
   tasks:
     - name: Set interfaces
+      template:
+        src: template
+        dest: /etc/network/interfaces.d/eth1
+      - name: Set interfaces
       ansible.builtin.shell: |
-        sudo echo '
-        source /etc/network/interfaces.d/*
-        allow-hotplug eth0
-        auto lo
-        iface lo inet loopback
-        iface eth0 inet dhcp
-        dns-nameserver 8.8.8.8
-        pre-up sleep 2
-
-        auto eth1
-        iface eth1 inet static
-        	address 10.0.2.1
-        	netmask 255.255.255.0
-        up ip route add 10.0.1.0/24 via 10.0.2.2
-        ' > /etc/network/interfaces
-      become: yes
+        sudo ifdown eth1 && sudo ifup eth1
