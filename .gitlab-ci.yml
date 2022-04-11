@@ -15,4 +15,4 @@ build-job:
         - ssh-keyscan -H 10.9.8.28 >> ~/.ssh/known_hosts
         - ssh-keyscan -H 10.9.8.26 >> ~/.ssh/known_hosts
         - ansible-playbook -i hostlist.txt ansible.yml
-        - sshpass -p iti ssh iti@10.9.8.16 ping 10.0.0.8 -c 1
+        - sshpass -p iti ssh iti@10.9.8.25 ping 10.0.0.2 -c 1
