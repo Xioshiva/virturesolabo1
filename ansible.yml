@@ -163,6 +163,9 @@
 - name: create server wireguard config h1
   become: yes
   hosts: h1
+  vars:
+    peer_h1_public_key: h1_pub
+    peer_h2_private_key: h2_priv
   tasks:
     - name: wireguard h1 
       template:
