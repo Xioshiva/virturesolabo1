@@ -120,8 +120,28 @@
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
       register: p1pubk
-      # set_fact: 
-      #   peer_h1_pub_key: "{{ p1pubk.stdout }}"
+    - set_fact: 
+        peer_h1_pub_key: "{{ p1pubk.stdout }}"
+
+- name: Wireguard setup h2
+  become: yes
+  vars:
+    p2prk: 0
+    p2pubk: 0
+  hosts: h2
+  tasks:
+    - name: Generate WireGuard keyPair
+      shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
+    - name: Register private key h2
+      shell: cat /etc/wireguard/privatekey
+      register: p2prk
+    - set_fact: 
+        peer_h1_private_key: "{{ p2prk.stdout }}"
+    - name: Register public key h2
+      shell: cat /etc/wireguard/publickey
+      register: p2pubk
+    - set_fact: 
+        peer_h1_pub_key: "{{ p2pubk.stdout }}"
 
 # - name: Wireguard setup h1
 #   vars:
