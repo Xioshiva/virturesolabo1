@@ -9,9 +9,9 @@ build-job:
     script:
         - echo "Hello, me"
         - whoami
-        - ls
+        - ls 
+        - mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
         - ssh-keyscan -H 10.9.8.25 >> home/.ssh/known_hosts
+        - ssh-keyscan -H 10.9.8.28 >> ~/.ssh/known_hosts
+        - ssh-keyscan -H 10.9.8.26 >> ~/.ssh/known_hosts
         - ansible-playbook -i hostlist.txt ansible.yml
-        
-        # - ssh-keyscan -H 10.9.8.28 >> ~/.ssh/known_hosts
-        # - ssh-keyscan -H 10.9.8.26 >> ~/.ssh/known_hosts
