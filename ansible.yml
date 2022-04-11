@@ -160,6 +160,8 @@
         owner: root
         group: root
         mode: '0600'
+    - name: restart wg
+      shell: wg-quick down wg0; wg-quick up wg0
 
 - name: wireguard config h1
   become: yes
@@ -175,5 +177,7 @@
         owner: root
         group: root
         mode: '0600'
+    - name: restart wg
+      shell: wg-quick down wg0; wg-quick up wg0
 
     
