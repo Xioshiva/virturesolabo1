@@ -120,7 +120,8 @@
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
       register: p1pubk
-    - set_fact: 
+    - name : test
+      set_fact: 
         peer_h1_public_key: "{{p1pubk.stdout}}"
 
 - name: Wireguard setup h2
