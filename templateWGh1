@@ -1,5 +1,5 @@
 [Interface]
-Address = 10.0.0.1/32
+Address = 10.0.0.1
 ListenPort = 50000
 PostUp = {{peer_h1_private_key}}
 
