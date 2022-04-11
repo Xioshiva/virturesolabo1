@@ -110,9 +110,9 @@
     peer_h1_public_key: 0
     peer_h2_public_key: 0
   become: yes
+  hosts: h1
   tasks:
     - name: generate WireGuard keyPair
-      hosts: h1
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h1
       hosts: h1
