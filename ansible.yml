@@ -122,12 +122,14 @@
       hosts: h1
       shell: cat /etc/wireguard/publickey
       register: peer_h1_public_key
-  hosts: h2
     - name: generate WireGuard keyPair
+      hosts: h2
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h2
+      hosts: h2
       shell: cat /etc/wireguard/privatekey
       register: peer_h2_private_key
     - name: Register public key h2
+      hosts: h2
       shell: cat /etc/wireguard/publickey
       register: peer_h2_public_key
