@@ -1,9 +1,9 @@
 [Interface]
-Address = 10.0.0.1/24
+Address = 10.0.0.1/32
 ListenPort = 50000
 PostUp = {{peer_h1_private_key}}
 
 [Peer]
 PublicKey = {{peer_h2_public_key}}
 AllowedIPs = 10.0.0.0/24
-Endpoint = 10.9.8.28:50000
+Endpoint = 10.0.2.1:50000
