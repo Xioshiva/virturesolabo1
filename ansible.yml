@@ -104,7 +104,6 @@
         sudo ifdown eth2 && sudo ifup eth2
 
 - name: Wireguard setup
-  hosts: h1
   vars:
     peer_h1_private_key: 0
     peer_h2_private_key: 0
@@ -113,11 +112,14 @@
   become: yes
   tasks:
     - name: generate WireGuard keyPair
+      hosts: h1
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h1
+      hosts: h1
       shell: cat /etc/wireguard/privatekey
       register: peer_h1_private_key
     - name: Register public key h1
+      hosts: h1
       shell: cat /etc/wireguard/publickey
       register: peer_h1_public_key
   hosts: h2
