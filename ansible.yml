@@ -1,0 +1,99 @@
+---
+- name: install and start nginx
+  hosts: h2
+  become: yes
+  vars:
+    http_port: 80
+  tasks:
+  - name: update pck
+    apt:
+      update_cache: yes
+      force: yes
+      cache_valid_time: 36000
+  - name: install nginx
+    apt: name=nginx state=latest
+  - name: start nginx
+    service:
+      name: nginx
+      state: started
+  - name: index.html is present
+    ansible.builtin.template:
+      src: index.html
+      dest: /var/www/html/index.html
+      
+- name: Write interfaces
+  hosts: h2
+  vars:
+    addr: 10.0.2.1
+    other_subnet: 10.0.1.0
+    router_addr: 10.0.2.2
+  become: yes
+  tasks:
+    - name: Set interfaces
+      template:
+        src: template
+        dest: /etc/network/interfaces.d/eth1
+      - name: Set interfaces
+      ansible.builtin.shell: |
+        sudo ifdown eth1 && sudo ifup eth1
+
+- name: Install curl
+  hosts: h1
+  become: yes
+  tasks:
+    - name: update pck
+      apt:
+        update_cache: yes
+        force: yes
+        cache_valid_time: 36000
+    - name: apt curl
+      apt: name=curl state=latest
+
+- name: Write interfaces
+  hosts: h1
+  vars:
+    addr: 10.0.1.1
+    other_subnet: 10.0.2.0
+    router_addr: 10.0.1.2
+  become: yes
+  tasks:
+    - name: Set interfaces
+      template:
+        src: template
+        dest: /etc/network/interfaces.d/eth1
+    - name: Set interfaces
+      ansible.builtin.shell: |
+        sudo ifdown eth1 && sudo ifup eth1
+- name: Ip forwarding
+  hosts: r1
+  tasks:
+    - ansible.posix.sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        sysctl_set: yes
+        state: present
+        reload: yes
+      become: yes
+
+- name: Write interfaces
+  hosts: r1
+  become: yes
+  tasks:
+    - name: Set interface 1
+      vars:
+        addr: 10.0.1.2
+        ethnbr: 1
+      template:
+        src: templaterouter
+        dest: /etc/network/interfaces.d/eth1
+    - name: Set interface 2
+      vars:
+        addr: 10.0.2.2
+        ethnbr: 2
+      template:
+        src: templaterouter
+        dest: /etc/network/interfaces.d/eth2
+    - name: Launch interfaces
+      ansible.builtin.shell: |
+        sudo ifdown eth1 && sudo ifup eth1
+        sudo ifdown eth2 && sudo ifup eth2
