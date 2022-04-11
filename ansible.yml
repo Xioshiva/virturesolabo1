@@ -23,7 +23,7 @@
   - name: apt wireguard
     apt: name=wireguard state=latest
       
-- name: Write interfaces
+- name: Write interfaces hé
   hosts: h2
   vars:
     addr: 10.0.2.1
@@ -31,15 +31,15 @@
     router_addr: 10.0.2.2
   become: yes
   tasks:
-    - name: Set interfaces
+    - name: Set interfaces h2
       template:
         src: template
         dest: /etc/network/interfaces.d/eth1
-    - name: Set interfaces
+    - name: Set interfaces h2
       ansible.builtin.shell: |
         sudo ifdown eth1 && sudo ifup eth1
 
-- name: Install curl and wireguard
+- name: Install curl and wireguard h1
   hosts: h1
   become: yes
   tasks:
@@ -48,12 +48,12 @@
         update_cache: yes
         force: yes
         cache_valid_time: 36000
-    - name: apt curl
+    - name: apt curl h1
       apt: name=curl state=latest
-    - name: apt wireguard
+    - name: apt wireguard h1
       apt: name=wireguard state=latest
 
-- name: Write interfaces
+- name: Write interfaces h1
   hosts: h1
   vars:
     addr: 10.0.1.1
@@ -61,11 +61,11 @@
     router_addr: 10.0.1.2
   become: yes
   tasks:
-    - name: Set interfaces
+    - name: Set interfaces h1
       template:
         src: template
         dest: /etc/network/interfaces.d/eth1
-    - name: Set interfaces
+    - name: Set interfaces h1
       ansible.builtin.shell: |
         sudo ifdown eth1 && sudo ifup eth1
 
@@ -122,7 +122,7 @@
       register: peer_h1_public_key
   hosts: h2
   tasks:
-    - name: generate WireGuard keyPair
+    - name: generate WireGuard keyPair 
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h2
       shell: cat /etc/wireguard/privatekey
