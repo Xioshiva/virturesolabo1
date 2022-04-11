@@ -1,9 +1,9 @@
 stage:
-    -build
+    - build
 
 
 build-job:
     stage: build
     script:
         - echo "Hello, me"
-        -whoami
+        - whoami
