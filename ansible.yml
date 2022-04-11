@@ -144,6 +144,18 @@
         peer_h2_public_key: "{{ p2pubk.stdout }}"
 
 
+- name: create server wireguard config h2
+  become: yes
+  hosts: h2
+  tasks:
+    - name: wireguard h2
+      template:
+        src: templateWGh2
+        dest: /etc/wireguard/wg0.conf
+        owner: root
+        group: root
+        mode: '0600'
+
 - name: create server wireguard config h1
   become: yes
   hosts: h1
@@ -156,15 +168,4 @@
         group: root
         mode: '0600'
 
-- name: create server wireguard config h2
-  become: yes
-  hosts: h2
-  tasks:
-    - name: wireguard h2
-      template:
-        src: templateWGh2
-        dest: /etc/wireguard/wg0.conf
-        owner: root
-        group: root
-        mode: '0600'
     
