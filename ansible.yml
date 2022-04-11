@@ -134,16 +134,16 @@
     template:
       dest: /etc/wireguard/wg0.conf
       src: templateWGh2
-      # owner: root
-      # group: root
-      # mode: '0600'
+      owner: root
+      group: root
+      mode: '0600'
   hosts: h1
   tasks:
     - name: create server wireguard config h1
     template:
       dest: /etc/wireguard/wg0.conf
       src: templateWGh1
-      # owner: root
-      # group: root
-      # mode: '0600'
+      owner: root
+      group: root
+      mode: '0600'
     
