@@ -1,5 +1,5 @@
 ---
-- name: install and start nginx
+- name: install and start nginx and install wireguard
   hosts: h2
   become: yes
   vars:
@@ -20,6 +20,8 @@
     ansible.builtin.template:
       src: index.html
       dest: /var/www/html/index.html
+  - name: apt wireguard
+      apt: name=wireguard state=latest
       
 - name: Write interfaces
   hosts: h2
@@ -37,7 +39,7 @@
       ansible.builtin.shell: |
         sudo ifdown eth1 && sudo ifup eth1
 
-- name: Install curl
+- name: Install curl and wireguard
   hosts: h1
   become: yes
   tasks:
@@ -66,6 +68,7 @@
     - name: Set interfaces
       ansible.builtin.shell: |
         sudo ifdown eth1 && sudo ifup eth1
+
 - name: Ip forwarding
   hosts: r1
   tasks:
@@ -99,3 +102,16 @@
       ansible.builtin.shell: |
         sudo ifdown eth1 && sudo ifup eth1
         sudo ifdown eth2 && sudo ifup eth2
+
+- name: Wireguard setup
+  hosts: h1
+  become: yes
+  tasks:
+    - name: generate WireGuard keyPair
+      shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
+    - name: Register private key h1
+      shell: cat /etc/wireguard/privatekey
+      register: peer_h1_private_key
+    - name: Register public key h1
+      shell: cat /etc/wireguard/publickey
+      register: peer_h1_public_key
