@@ -1,7 +1,7 @@
 [Interface]
 Address = 10.0.0.1/24
 ListenPort = 50000
-PrivateKey = {{peer_h1_private_key}}
+PostUp = {{peer_h1_private_key}}
 
 [Peer]
 PublicKey = {{peer_h2_public_key}}

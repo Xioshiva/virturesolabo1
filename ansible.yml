@@ -120,7 +120,7 @@
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
       register: p1pubk
-    - name : test
+    - name : set fact h1
       set_fact: 
         h1_pub: "{{p1pubk.stdout}}"
 
@@ -141,12 +141,12 @@
     - name: Register public key h2
       shell: cat /etc/wireguard/publickey
       register: p2pubk
-    - name : test
+    - name : set_fact h2
       set_fact: 
         h2_pub: "{{p2pubk.stdout}}"
 
 
-- name: create server wireguard config h2
+- name: wireguard config h2
   become: yes
   hosts: h2
   vars:
@@ -161,7 +161,7 @@
         group: root
         mode: '0600'
 
-- name: create server wireguard config h1
+- name: wireguard config h1
   become: yes
   hosts: h1
   vars:
