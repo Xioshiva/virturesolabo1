@@ -130,9 +130,8 @@
     - name: Register public key h2
       shell: cat /etc/wireguard/publickey
       register: peer_h2_public_key
-  tasks:
     - name: create server wireguard config
-      template:
+    template:
       dest: /etc/wireguard/wg0.conf
       src: templateWGh2
       owner: root
@@ -141,7 +140,7 @@
   hosts: h1
   tasks:
     - name: create server wireguard config
-      template:
+    template:
       dest: /etc/wireguard/wg0.conf
       src: templateWGh1
       owner: root
