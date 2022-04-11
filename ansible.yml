@@ -141,7 +141,7 @@
       shell: cat /etc/wireguard/publickey
       register: p2pubk
     - set_fact: 
-        peer_h2_pub_key: "{{ p2pubk.stdout }}"
+        peer_h2_public_key: "{{ p2pubk.stdout }}"
 
 
 - name: create server wireguard config h1
@@ -150,18 +150,21 @@
   tasks:
     - name: wireguard h1 
       template:
+        src: templateWGh1
+        dest: /etc/wireguard/wg0.conf
+        owner: root
+        group: root
+        mode: '0600'
+
+- name: create server wireguard config h2
+  become: yes
+  hosts: h2
+  tasks:
+    - name: wireguard h2
+      template:
         src: templateWGh2
         dest: /etc/wireguard/wg0.conf
         owner: root
         group: root
         mode: '0600'
-  # hosts: h1
-  # tasks:
-  #   - name: create server wireguard config h1
-  #     template:
-  #       src: templateWGh1
-  #       dest: /etc/wireguard/wg0.conf
-  #       owner: root
-  #       group: root
-  #       mode: '0600'
     
