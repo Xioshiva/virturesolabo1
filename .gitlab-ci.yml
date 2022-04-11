@@ -3,6 +3,8 @@ stages:
 
 
 build-job:
+    tags:
+        - test
     stage: build
     script:
         - echo "Hello, me"
