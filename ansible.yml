@@ -150,8 +150,8 @@
   become: yes
   hosts: h2
   vars:
-    peer_h1_public_key: h1_pub
-    peer_h2_private_key: h2_priv
+    peer_h1_public_key: "{{ hostvars['h1'].h1_pub}}"
+    peer_h2_private_key: "{{ hostvars['h2'].h2_priv}}"
   tasks:
     - name: wireguard h2
       template:
