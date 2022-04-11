@@ -112,8 +112,8 @@
     - name: Register private key h1
       shell: cat /etc/wireguard/privatekey
       register: p1prk
-      set_fact: 
-        peer_h1_private_key: "{{ p1prk.stdout }}"
+      # set_fact: 
+      #   peer_h1_private_key: "{{ p1prk.stdout }}"
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
       register: p1pubk
