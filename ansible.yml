@@ -141,7 +141,8 @@
     - name: Register public key h2
       shell: cat /etc/wireguard/publickey
       register: p2pubk
-    - set_fact: 
+    - name : test
+      set_fact: 
         h2_pub: "{{p2pubk.stdout}}"
 
 
@@ -164,8 +165,8 @@
   become: yes
   hosts: h1
   vars:
-    peer_h1_private_key: h1_priv
-    peer_h2_public_key: h2_pub
+    peer_h1_private_key: "{{ hostvars['h1'].h1_priv}}"
+    peer_h2_public_key: "{{ hostvars['h2'].h2_pub}}"
   tasks:
     - name: wireguard h1 
       template:
