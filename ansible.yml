@@ -21,21 +21,21 @@
       src: index.html
       dest: /var/www/html/index.html
       
-- name: Write interfaces
-  hosts: h2
-  vars:
-    addr: 10.0.2.1
-    other_subnet: 10.0.1.0
-    router_addr: 10.0.2.2
-  become: yes
-  tasks:
-    - name: Set interfaces
-      template:
-        src: template
-        dest: /etc/network/interfaces.d/eth1
-      - name: Set interfaces
-      ansible.builtin.shell: |
-        sudo ifdown eth1 && sudo ifup eth1
+# - name: Write interfaces
+#   hosts: h2
+#   vars:
+#     addr: 10.0.2.1
+#     other_subnet: 10.0.1.0
+#     router_addr: 10.0.2.2
+#   become: yes
+#   tasks:
+#     - name: Set interfaces
+#       template:
+#         src: template
+#         dest: /etc/network/interfaces.d/eth1
+#       - name: Set interfaces
+#       ansible.builtin.shell: |
+#         sudo ifdown eth1 && sudo ifup eth1
 
 - name: Install curl
   hosts: h1
