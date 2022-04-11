@@ -112,7 +112,7 @@
   become: yes
   hosts: h1
   tasks:
-    - name: generate WireGuard keyPair
+    - name: Generate WireGuard keyPair
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h1
       shell: cat /etc/wireguard/privatekey
@@ -122,7 +122,7 @@
       register: peer_h1_public_key
   hosts: h2
   tasks:
-    - name: generate WireGuard keyPair 
+    - name: Generate WireGuard keyPair 
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h2
       shell: cat /etc/wireguard/privatekey
