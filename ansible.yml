@@ -116,13 +116,13 @@
       shell: cat /etc/wireguard/privatekey
       register: p1prk
     - set_fact: 
-        peer_h1_private_key: "{{p1prk.stdout}}"
+        h1_priv: "{{p1prk.stdout}}"
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
       register: p1pubk
     - name : test
       set_fact: 
-        peer_h1_public_key: "{{p1pubk.stdout}}"
+        h1_pub: "{{p1pubk.stdout}}"
 
 - name: Wireguard setup h2
   become: yes
@@ -137,20 +137,20 @@
       shell: cat /etc/wireguard/privatekey
       register: p2prk
     - set_fact: 
-        peer_h2_private_key: "{{ p2prk.stdout }}"
+        h2_priv: "{{p2prk.stdout}}"
     - name: Register public key h2
       shell: cat /etc/wireguard/publickey
       register: p2pubk
     - set_fact: 
-        peer_h2_public_key: "{{ p2pubk.stdout }}"
+        h2_pub: "{{p2pubk.stdout}}"
 
 
 - name: create server wireguard config h2
   become: yes
   hosts: h2
   vars:
-    peer_h1_private_key: peer_h1_private_key
-    peer_h1_public_key: peer_h1_public_key
+    peer_h1_private_key: h1_priv
+    peer_h1_public_key: h1_pub
   tasks:
     - name: wireguard h2
       template:
