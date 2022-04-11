@@ -103,12 +103,8 @@
         sudo ifdown eth1 && sudo ifup eth1
         sudo ifdown eth2 && sudo ifup eth2
 
-- name: Wireguard setup
+- name: Wireguard setup h1
   vars:
-    peer_h1_private_key: 0
-    peer_h2_private_key: 0
-    peer_h1_public_key: 0
-    peer_h2_public_key: 0
   become: yes
   hosts: h1
   tasks:
@@ -116,27 +112,34 @@
       shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
     - name: Register private key h1
       shell: cat /etc/wireguard/privatekey
-      register: peer_h1_private_key
+      register: p1prk
+      set_fact: 
+        peer_h1_private_key: "{{ p1prk.stdout }}"
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
-      register: peer_h1_public_key
-  # hosts: h2
-  # tasks:
-  #   - name: Generate WireGuard keyPair 
-  #     shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
-  #   - name: Register private key h2
-  #     shell: cat /etc/wireguard/privatekey
-  #     register: peer_h2_private_key
-  #   - name: Register public key h2
-  #     shell: cat /etc/wireguard/publickey
-  #     register: peer_h2_public_key
-  #   - name: create server wireguard config h2
-  #     template:
-  #       src: templateWGh2
-  #       dest: /etc/wireguard/wg0.conf
-  #       owner: root
-  #       group: root
-  #       mode: '0600'
+      register: p1pubk
+      set_fact: 
+        peer_h1_pub_key: "{{ p1pubk.stdout }}"
+- name: Wireguard setup h1
+  vars:
+  become: yes
+  hosts: h2
+  tasks:
+    - name: Generate WireGuard keyPair 
+      shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
+    - name: Register private key h2
+      shell: cat /etc/wireguard/privatekey
+      register: peer_h2_private_key
+    - name: Register public key h2
+      shell: cat /etc/wireguard/publickey
+      register: peer_h2_public_key
+    - name: create server wireguard config h2
+      template:
+        src: templateWGh2
+        dest: /etc/wireguard/wg0.conf
+        owner: root
+        group: root
+        mode: '0600'
   # hosts: h1
   # tasks:
   #   - name: create server wireguard config h1
