@@ -17,4 +17,4 @@ build-job:
         - ansible-playbook -i hostlist.txt ansible.yml 
         - sshpass -p iti ssh iti@10.9.8.25 sudo cat /etc/wireguard/wg0.conf
         - sshpass -p iti ssh iti@10.9.8.28 sudo cat /etc/wireguard/wg0.conf
-        - sshpass -p iti ssh iti@10.9.8.25 ping 10.0.0.2 -c 1
+        - sshpass -p iti ssh iti@10.9.8.25 ping 10.0.0.2 -c 5

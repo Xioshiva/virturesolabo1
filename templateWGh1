@@ -1,9 +1,9 @@
 [Interface]
 Address = 10.0.0.1/24
-ListenPort = 51902
+ListenPort = 50000
 PrivateKey = {{peer_h1_private_key}}
 
 [Peer]
 PublicKey = {{peer_h2_public_key}}
 AllowedIPs = 10.0.0.0/24
-Endpoint = 10.9.8.28:51888
+Endpoint = 10.9.8.28:50000
