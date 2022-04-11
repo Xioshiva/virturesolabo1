@@ -48,6 +48,8 @@
         cache_valid_time: 36000
     - name: apt curl
       apt: name=curl state=latest
+    - name: apt wireguard
+      apt: name=wireguard state=latest
 
 - name: Write interfaces
   hosts: h1
