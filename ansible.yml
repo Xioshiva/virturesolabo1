@@ -105,6 +105,8 @@
 
 - name: Wireguard setup h1
   become: yes
+  vars:
+    p1prk: 0
   hosts: h1
   tasks:
     - name: Generate WireGuard keyPair
