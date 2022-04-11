@@ -33,7 +33,7 @@
       template:
         src: template
         dest: /etc/network/interfaces.d/eth1
-      - name: Set interfaces
+    - name: Set interfaces
       ansible.builtin.shell: |
         sudo ifdown eth1 && sudo ifup eth1
 
