@@ -23,7 +23,7 @@
   - name: apt wireguard
     apt: name=wireguard state=latest
       
-- name: Write interfaces hé
+- name: Write interfaces h2
   hosts: h2
   vars:
     addr: 10.0.2.1
@@ -80,7 +80,7 @@
         reload: yes
       become: yes
 
-- name: Write interfaces
+- name: Write interfaces r1
   hosts: r1
   become: yes
   tasks:
@@ -120,30 +120,30 @@
     - name: Register public key h1
       shell: cat /etc/wireguard/publickey
       register: peer_h1_public_key
-  hosts: h2
-  tasks:
-    - name: Generate WireGuard keyPair 
-      shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
-    - name: Register private key h2
-      shell: cat /etc/wireguard/privatekey
-      register: peer_h2_private_key
-    - name: Register public key h2
-      shell: cat /etc/wireguard/publickey
-      register: peer_h2_public_key
-    - name: create server wireguard config h2
-      template:
-        src: templateWGh2
-        dest: /etc/wireguard/wg0.conf
-        owner: root
-        group: root
-        mode: '0600'
-  hosts: h1
-  tasks:
-    - name: create server wireguard config h1
-      template:
-        src: templateWGh1
-        dest: /etc/wireguard/wg0.conf
-        owner: root
-        group: root
-        mode: '0600'
+  # hosts: h2
+  # tasks:
+  #   - name: Generate WireGuard keyPair 
+  #     shell: wg genkey | tee /etc/wireguard/privatekey | wg pubkey > /etc/wireguard/publickey
+  #   - name: Register private key h2
+  #     shell: cat /etc/wireguard/privatekey
+  #     register: peer_h2_private_key
+  #   - name: Register public key h2
+  #     shell: cat /etc/wireguard/publickey
+  #     register: peer_h2_public_key
+  #   - name: create server wireguard config h2
+  #     template:
+  #       src: templateWGh2
+  #       dest: /etc/wireguard/wg0.conf
+  #       owner: root
+  #       group: root
+  #       mode: '0600'
+  # hosts: h1
+  # tasks:
+  #   - name: create server wireguard config h1
+  #     template:
+  #       src: templateWGh1
+  #       dest: /etc/wireguard/wg0.conf
+  #       owner: root
+  #       group: root
+  #       mode: '0600'
     
