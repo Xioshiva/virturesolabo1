@@ -149,7 +149,8 @@
   become: yes
   hosts: h2
   vars:
-    peer_h2_public_key: peer_h2_public_key
+    peer_h1_private_key: peer_h1_private_key
+    peer_h1_public_key: peer_h1_public_key
   tasks:
     - name: wireguard h2
       template:
